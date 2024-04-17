@@ -21,7 +21,21 @@ def clean_resume(resume_text):
     return clean_text
 # web app
 def main():
-    st.title("Resume Screening App")
+
+  app_container = st.container()
+
+  # Add background image style to the container
+  with app_container:
+    st.write("""
+      <style>
+        .stApp {
+          background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20210918/pngtree-irregular-triangular-low-poly-style-cyan-background-image_902896.png");
+          background-size: cover;
+        }
+      </style>
+      """, unsafe_allow_html=True)
+
+    st.title("Job Recommendation System")
     uploaded_file = st.file_uploader('Upload Resume', type=['txt','pdf'])
 
     if uploaded_file is not None:
