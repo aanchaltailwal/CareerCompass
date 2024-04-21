@@ -16,6 +16,22 @@ nltk.download('stopwords')
 clf = pickle.load(open('clf.pkl','rb'))
 tfidfd = pickle.load(open('tfidf.pkl','rb'))
 
+# Define the URL of the background image
+background_image_url = "https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+
+# Use the background image URL in your Streamlit app
+st.markdown(
+    f"""
+    <style>
+        body {{
+            background-image: url('{background_image_url}');
+            background-size: cover;
+        }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 def clean_resume(resume_text):
     clean_text = re.sub('http\\S+\\s*', ' ', resume_text)
     clean_text = re.sub('RT|cc', ' ', clean_text)
@@ -47,7 +63,7 @@ def fetch_linkedin_jobs(api_key, field, geoid, page):
 
 # web app
 def main():
-  
+
     # authorization details
     AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/auth"
     TOKEN_URL = "https://oauth2.googleapis.com/token"
@@ -90,7 +106,7 @@ def main():
         # remaining code after authorization
         st.title("Job Recommendation System")
         uploaded_file = st.file_uploader('Upload Resume', type=['txt','pdf'])
-
+        
         if uploaded_file is not None:
             try:
                 resume_bytes = uploaded_file.read()
