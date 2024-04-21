@@ -132,23 +132,20 @@ def main():
 
             st.write("Predicted Category:", category_name)
 
-        category_name = category_mapping.get(prediction_id, "Unknown")
 
-        st.write("Predicted Category:", category_name)
-
-        # Fetch LinkedIn jobs based on recommended job role
-        st.header("Recommended LinkedIn Jobs")
-        jobs = fetch_linkedin_jobs("662132f5ce0c211738e0d20f", category_name, "102713980", "1")
-        if jobs:
-            for job in jobs:
-                st.write("Job Position:", job["job_position"])
-                st.write("Company Name:", job["company_name"])
-                st.write("Location:", job["job_location"])
-                st.write("Posting Date:", job["job_posting_date"])
-                st.write("Job Link:", job["job_link"])
-                st.write("---")
-        else:
-            st.warning("No jobs found. Please try again.")
+            # Fetch LinkedIn jobs based on recommended job role
+            st.header("Recommended LinkedIn Jobs")
+            jobs = fetch_linkedin_jobs("662132f5ce0c211738e0d20f", category_name, "102713980", "1")
+            if jobs:
+                for job in jobs:
+                    st.write("Job Position:", job["job_position"])
+                    st.write("Company Name:", job["company_name"])
+                    st.write("Location:", job["job_location"])
+                    st.write("Posting Date:", job["job_posting_date"])
+                    st.write("Job Link:", job["job_link"])
+                    st.write("---")
+            else:
+                st.warning("No jobs found. Please try again.")
 
 # python main
 if __name__ == "__main__":
