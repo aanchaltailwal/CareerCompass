@@ -4,6 +4,10 @@ import pickle
 import re
 import nltk
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -48,8 +52,8 @@ def main():
     AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/auth"
     TOKEN_URL = "https://oauth2.googleapis.com/token"
     # REVOKE_URL = <YOUR REVOKE URL>
-    CLIENT_ID = "1087626134303-vjltudp7ekllo1oe2mc5k8beijef5l5s.apps.googleusercontent.com"
-    CLIENT_SECRET = "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"
+    CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+    CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
     REDIRECT_URI = "http://localhost:8501"
     SCOPE = "openid email profile"
     
