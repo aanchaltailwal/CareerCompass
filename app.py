@@ -54,7 +54,7 @@ def main():
     # REVOKE_URL = <YOUR REVOKE URL>
     CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
     CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
-    REDIRECT_URI = "http://localhost:8501"
+    REDIRECT_URI = "https://careercompassupes.streamlit.app"
     SCOPE = "openid email profile"
     
     oauth2 = OAuth2Component(CLIENT_ID, CLIENT_SECRET, AUTHORIZATION_URL, TOKEN_URL, TOKEN_URL)
