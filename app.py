@@ -139,7 +139,7 @@ def main():
 
 
             # Fetch LinkedIn jobs based on recommended job role
-            st.header("Recommended LinkedIn Jobs")
+            st.header("Recommended Linken Jobs")
             jobs = fetch_linkedin_jobs("662132f5ce0c211738e0d20f", category_name, "102713980", "1")
             if jobs:
                 for job in jobs:
