@@ -6,6 +6,7 @@ import nltk
 import requests
 from dotenv import load_dotenv
 import os
+from streamlit_extras.stylable_container import stylable_container
 
 load_dotenv()
 
@@ -15,22 +16,6 @@ nltk.download('stopwords')
 #loading models
 clf = pickle.load(open('clf.pkl','rb'))
 tfidfd = pickle.load(open('tfidf.pkl','rb'))
-
-# Define the URL of the background image
-background_image_url = "https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-
-# Use the background image URL in your Streamlit app
-st.markdown(
-    f"""
-    <style>
-        body {{
-            background-image: url('{background_image_url}');
-            background-size: cover;
-        }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 def clean_resume(resume_text):
     clean_text = re.sub('http\\S+\\s*', ' ', resume_text)
@@ -158,12 +143,23 @@ def main():
             jobs = fetch_linkedin_jobs("662132f5ce0c211738e0d20f", category_name, "102713980", "1")
             if jobs:
                 for job in jobs:
-                    st.write("Job Position:", job["job_position"])
-                    st.write("Company Name:", job["company_name"])
-                    st.write("Location:", job["job_location"])
-                    st.write("Posting Date:", job["job_posting_date"])
-                    st.write("Job Link:", job["job_link"])
-                    st.write("---")
+                    with stylable_container(
+                        key=f"job_{job['job_id']}_container",
+                        css_styles="""
+                            {
+                                border: 1px solid rgba(49, 51, 63, 0.2);
+                                border-radius: 0.5rem;
+                                padding: calc(1em - 1px);
+                                margin-bottom: 1rem;
+                            }
+                            """,
+                    ):
+                        st.write("Job Position:", job["job_position"])
+                        st.write("Company Name:", job["company_name"])
+                        st.write("Location:", job["job_location"])
+                        st.write("Posting Date:", job["job_posting_date"])
+                        st.write("Job Link:", job["job_link"])
+                        st.write("---")
             else:
                 st.warning("No jobs found. Please try again.")
 
