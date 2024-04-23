@@ -17,6 +17,24 @@ nltk.download('stopwords')
 clf = pickle.load(open('clf.pkl','rb'))
 tfidfd = pickle.load(open('tfidf.pkl','rb'))
 
+script_directory = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the path to the image relative to the script directory
+image_url = "https://images.unsplash.com/photo-1614852206732-6728910dc175?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+
+with st.container():
+    st.write(
+        f"""
+        <style>
+            .stApp {{
+                background-image: url("{image_url}");
+                background-size: cover;
+            }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
 def clean_resume(resume_text):
     clean_text = re.sub('http\\S+\\s*', ' ', resume_text)
     clean_text = re.sub('RT|cc', ' ', clean_text)
@@ -139,7 +157,7 @@ def main():
 
 
             # Fetch LinkedIn jobs based on recommended job role
-            st.header("Recommended Linken Jobs")
+            st.header("Recommended LinkedIn Jobs")
             jobs = fetch_linkedin_jobs("662132f5ce0c211738e0d20f", category_name, "102713980", "1")
             if jobs:
                 for job in jobs:
@@ -147,19 +165,19 @@ def main():
                         key=f"job_{job['job_id']}_container",
                         css_styles="""
                             {
-                                border: 1px solid rgba(49, 51, 63, 0.2);
+                                border: 3px solid #ffffff;
                                 border-radius: 0.5rem;
-                                padding: calc(1em - 1px);
                                 margin-bottom: 1rem;
+                                padding: 1em 0.5rem;
+                                box-sizing: border-box;
                             }
                             """,
-                    ):
-                        st.write("Job Position:", job["job_position"])
-                        st.write("Company Name:", job["company_name"])
-                        st.write("Location:", job["job_location"])
-                        st.write("Posting Date:", job["job_posting_date"])
+                    ):  
+                        st.markdown(f"<h3 style='font-size: 1.25rem'>{job['job_position']}</h3>", unsafe_allow_html=True)
+                        st.write("Company Name:", job["company_name"]) 
+                        st.write("Location:", job["job_location"]) 
+                        st.write("Posting Date:", job["job_posting_date"]) 
                         st.write("Job Link:", job["job_link"])
-                        st.write("---")
             else:
                 st.warning("No jobs found. Please try again.")
 
